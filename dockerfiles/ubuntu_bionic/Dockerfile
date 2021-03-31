@@ -1,6 +1,7 @@
 ARG FROM=ubuntu:bionic
 FROM ${FROM}
 
+ARG OPENSTACK_VERSION=ussuri
 ARG UBUNTU_URL=http://archive.ubuntu.com/ubuntu/
 ARG CLOUD_ARCHIVE_URL=http://ubuntu-cloud.archive.canonical.com/ubuntu/
 ARG CEPH_URL=http://download.ceph.com/debian-nautilus/
@@ -14,6 +15,7 @@ ENV PIP_TRUSTED_HOST=${PIP_TRUSTED_HOST}
 COPY sources.list /etc/apt/
 COPY cloud-archive.gpg ceph.gpg nectar.gpg /etc/apt/trusted.gpg.d/
 RUN sed -i \
+        -e "s|%%OPENSTACK_VERSION%%|${OPENSTACK_VERSION}|g" \
         -e "s|%%UBUNTU_URL%%|${UBUNTU_URL}|g" \
         -e "s|%%CLOUD_ARCHIVE_URL%%|${CLOUD_ARCHIVE_URL}|g" \
         -e "s|%%CEPH_URL%%|${CEPH_URL}|g" \
